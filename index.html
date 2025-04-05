@@ -46,32 +46,10 @@
 
         <section class="confirmation-section" id="confirmacao">
             <h2>Confirme sua Presença</h2>
-            <form id="confirmation-form">
-                <div class="form-group">
-                    <label for="name">Nome Completo</label>
-                    <input type="text" id="name" name="name" required>
-                </div>
-
-                <div class="form-group">
-                    <label for="phone">Telefone</label>
-                    <input type="tel" id="phone" name="phone" required>
-                </div>
-                <div class="form-group">
-                    <label>Você vai comparecer?</label>
-                    <div class="radio-group">
-                        <input type="radio" id="yes" name="attendance" value="sim" required>
-                        <label for="yes">Sim</label>
-                        <input type="radio" id="no" name="attendance" value="nao">
-                        <label for="no">Não</label>
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <label for="message">Mensagem (opcional)</label>
-                    <textarea id="message" name="message" rows="3"></textarea>
-                </div>
-                <button type="submit" class="btn-confirm">Confirmar Presença</button>
-            </form>
+            <p>Para confirmar sua presença na festa, clique no botão abaixo e preencha o formulário.</p>
+            <a href="https://docs.google.com/forms/d/e/1FAIpQLSdFVchjsaniqVRbL5UIhevhvsozdc74gNfRTV8lzSvjDmCO-w/viewform?usp=dialog" target="_blank" class="btn-confirm" style="display: inline-block; text-decoration: none; margin-top: 15px;">
+                <i class="fas fa-check-circle"></i> Confirmar Presença no Google Forms
+            </a>
         </section>
 
 
@@ -108,14 +86,7 @@
         </footer>
     </div>
 
-    <div id="confirmation-modal" class="modal">
-        <div class="modal-content">
-            <span class="close-button">&times;</span>
-            <h2>Obrigado!</h2>
-            <p>Sua confirmação foi recebida com sucesso.</p>
-            <p>Estamos ansiosos para vê-lo na festa!</p>
-        </div>
-    </div>
+    <!-- Modal removido pois agora usamos o Google Forms para confirmação -->
 
     <!-- Firebase SDK -->
     <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
