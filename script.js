@@ -60,6 +60,25 @@ document.addEventListener('DOMContentLoaded', function() {
             // Salva os dados usando o objeto GuestData
             GuestData.addGuest(guestData);
             
+            // Envia os dados para o servidor Node.js
+            fetch('/api/guests', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(guestData)
+            })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Erro ao enviar dados para o servidor');
+                }
+                return response.json();
+            })
+            .catch(error => {
+                console.error('Erro:', error);
+                // Continua com o fluxo mesmo em caso de erro
+            });
+            
             // Exibição do modal de confirmação
             modal.style.display = 'flex';
             
