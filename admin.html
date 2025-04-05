@@ -396,6 +396,10 @@
         statusFilter.addEventListener('change', loadGuests);
         searchInput.addEventListener('input', loadGuests);
         exportBtn.addEventListener('click', exportCSV);
+        
+        // Adicionar listeners para atualização em tempo real
+        document.addEventListener('guestDataUpdated', loadGuests);
+        document.addEventListener('guestDataLoaded', loadGuests);
     </script>
 </body>
 </html>
