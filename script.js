@@ -57,27 +57,46 @@ document.addEventListener('DOMContentLoaded', function() {
                 date: new Date().toISOString()
             };
             
-            // Salva os dados usando o objeto GuestData
-            GuestData.addGuest(guestData);
-            
-            // Envia os dados para o servidor Node.js
-            fetch('/api/guests', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(guestData)
-            })
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error('Erro ao enviar dados para o servidor');
+            // Tenta salvar os dados usando o objeto GuestData se disponível
+            try {
+                if (typeof GuestData !== 'undefined' && GuestData.addGuest) {
+                    GuestData.addGuest(guestData);
+                } else {
+                    // Fallback: salva no localStorage se GuestData não estiver disponível
+                    const storedGuests = localStorage.getItem('birthdayGuests');
+                    let guests = [];
+                    if (storedGuests) {
+                        guests = JSON.parse(storedGuests);
+                    }
+                    guests.push(guestData);
+                    localStorage.setItem('birthdayGuests', JSON.stringify(guests));
+                    console.log('Dados salvos localmente com sucesso');
                 }
-                return response.json();
-            })
-            .catch(error => {
-                console.error('Erro:', error);
-                // Continua com o fluxo mesmo em caso de erro
-            });
+                
+                // Tenta enviar os dados para o servidor Node.js com URL absoluta
+                const serverUrl = window.location.hostname === 'localhost' ? '/api/guests' : 'https://convite-aniversario-18.herokuapp.com/api/guests';
+                
+                fetch(serverUrl, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(guestData)
+                })
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Erro ao enviar dados para o servidor');
+                    }
+                    return response.json();
+                })
+                .catch(error => {
+                    console.error('Erro ao enviar para o servidor:', error);
+                    // Continua com o fluxo mesmo em caso de erro
+                });
+            } catch (error) {
+                console.error('Erro ao processar confirmação:', error);
+                // Garante que o modal seja exibido mesmo com erro
+            }
             
             // Exibição do modal de confirmação
             modal.style.display = 'flex';
